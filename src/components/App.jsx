@@ -1,5 +1,10 @@
 import { Container } from './App.styled';
+import { Counter } from './feedback/Feedback';
 
 export const App = () => {
-  return <Container>React homework template</Container>;
+  return (
+    <Container>
+      <Counter />
+    </Container>
+  );
 };
