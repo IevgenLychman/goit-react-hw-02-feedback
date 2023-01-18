@@ -1,4 +1,6 @@
 import React from 'react';
+import { Statistics } from 'components/Statistics/Statistics';
+import { FeedbackOptions } from 'components/FeedbackOptions/FeedbackOptions';
 
 export class Counter extends React.Component {
   state = {
@@ -7,42 +9,37 @@ export class Counter extends React.Component {
     bad: 0,
   };
 
-  addFeedback = type => {
-    const wtf = type;
+  onLeaveFeedback = options => {
     this.setState(prevState => ({
-      wtf: prevState.good + 1,
+      [options]: prevState[options] + 1,
     }));
   };
 
-  //   addFeedback = () => {
-  //     this.setState(prevState => {
-  //       return {
-  //         good: prevState.value + 1,
-  //       };
-  //     });
-  //   };
+  countTotalFeedback = () => {
+    return this.state.good + this.state.neutral + this.state.bad;
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    const sum = this.state.good + this.state.neutral + this.state.bad;
+    return Math.round((this.state.good * 100) / sum);
+  };
 
   render() {
-    // const { step } = this.props;
-
     return (
       <div>
         <h1>Please leave feedback</h1>
-        <button type="button" onClick={this.addFeedback(good)}>
-          Good
-        </button>
-        <button type="button" onClick={this.addFeedback}>
-          Neutral
-        </button>
-        <button type="button" onClick={this.addFeedback}>
-          Bad
-        </button>
+        <FeedbackOptions
+          items={['good', 'neutral', 'bad']}
+          onLeaveFeedback={this.onLeaveFeedback}
+        />
         <p>Statistics</p>
-        <ul>
-          <li>Good {this.state.good}</li>
-          <li>Neutral {this.state.neutral}</li>
-          <li>Bad {this.state.bad}</li>
-        </ul>
+        <Statistics
+          good={this.state.good}
+          neutral={this.state.neutral}
+          bad={this.state.bad}
+          total={this.countTotalFeedback()}
+          positivePercentage={this.countPositiveFeedbackPercentage()}
+        />
       </div>
     );
   }
