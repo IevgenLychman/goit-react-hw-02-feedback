@@ -1,6 +1,7 @@
 import React from 'react';
-import { Statistics } from 'components/Statistics/Statistics';
-import { FeedbackOptions } from 'components/FeedbackOptions/FeedbackOptions';
+import { Statistics } from 'components/statistics/Statistics';
+import { FeedbackOptions } from 'components/feedbackOptions/FeedbackOptions';
+import { SectionTitle } from 'components/sectionTitle/SectionTitle';
 
 export class Counter extends React.Component {
   state = {
@@ -21,26 +22,37 @@ export class Counter extends React.Component {
 
   countPositiveFeedbackPercentage = () => {
     const sum = this.state.good + this.state.neutral + this.state.bad;
+    if (!sum) {
+      return 0;
+    }
     return Math.round((this.state.good * 100) / sum);
   };
 
   render() {
+    const sum = this.state.good + this.state.bad + this.state.neutral;
+
     return (
-      <div>
-        <h1>Please leave feedback</h1>
-        <FeedbackOptions
-          items={['good', 'neutral', 'bad']}
-          onLeaveFeedback={this.onLeaveFeedback}
-        />
-        <p>Statistics</p>
-        <Statistics
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
-          total={this.countTotalFeedback()}
-          positivePercentage={this.countPositiveFeedbackPercentage()}
-        />
-      </div>
+      <>
+        <SectionTitle title="Please leave feedback">
+          <FeedbackOptions
+            items={['good', 'neutral', 'bad']}
+            onLeaveFeedback={this.onLeaveFeedback}
+          />
+        </SectionTitle>
+        <SectionTitle title="Statistics">
+          {sum === 0 ? (
+            'There is no feedback'
+          ) : (
+            <Statistics
+              good={this.state.good}
+              neutral={this.state.neutral}
+              bad={this.state.bad}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          )}
+        </SectionTitle>
+      </>
     );
   }
 }

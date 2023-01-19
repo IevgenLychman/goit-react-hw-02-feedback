@@ -2,8 +2,9 @@ import styled from '@emotion/styled';
 
 export const Section = styled.div`
   display: block;
-  text-align: center;
-  width: 300px;
+  width: 250px;
+  padding: 0;
+  margin: 0;
 `;
 
 export const Title = styled.h2`
