@@ -1,6 +1,6 @@
 import React from 'react';
-import { Statistics } from 'components/statistics/Statistics';
-import { FeedbackOptions } from 'components/feedbackOptions/FeedbackOptions';
+import { Statistics } from 'components/statistic/Statistics';
+import { FeedbackOptions } from 'components/feedbackOption/FeedbackOptions';
 import { SectionTitle } from 'components/sectionTitle/SectionTitle';
 
 export class Counter extends React.Component {
